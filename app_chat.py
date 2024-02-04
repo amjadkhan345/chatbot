@@ -103,7 +103,7 @@ if prompt := st.chat_input('Your message here...'):
         avatar=AI_AVATAR_ICON,
     ):
         message_placeholder = st.empty()
-        full _response = ''
+        full_response = ''
         response_parts = response.candidates[0].content.parts
     # Streams in a chunk at a time
         for part in response_parts:
