@@ -3,9 +3,9 @@ import os
 import joblib
 import streamlit as st
 import google.generativeai as genai
-#from dotenv import load_dotenv
-#load_dotenv()
-GOOGLE_API_KEY= "AIzaSyB90zUQDGx82iJBKVU66s439Me_qxJanJs" #os.environ.get('GOOGLE_API_KEY')
+from dotenv import load_dotenv
+load_dotenv()
+GOOGLE_API_KEY="AIzaSyB90zUQDGx82iJBKVU66s439Me_qxJanJs" #os.environ.get('GOOGLE_API_KEY')
 genai.configure(api_key=GOOGLE_API_KEY)
 
 new_chat_id = f'{time.time()}'
@@ -104,17 +104,17 @@ if prompt := st.chat_input('Your message here...'):
     ):
         message_placeholder = st.empty()
         full_response = ''
-        response_parts = response.candidates[0].content.parts
-    # Streams in a chunk at a time
-        for part in response_parts:
-        # Simulate stream of chunk
-        # TODO: Chunk missing `text` if API stops mid-stream ("safety"?)
-            for ch in part.text.split(' '):
+        assistant_response = response
+        # Streams in a chunk at a time
+        for chunk in response:
+            # Simulate stream of chunk
+            # TODO: Chunk missing `text` if API stops mid-stream ("safety"?)
+            for ch in chunk.text.split(' '):
                 full_response += ch + ' '
                 time.sleep(0.05)
-            # Rewrites with a cursor at end
+                # Rewrites with a cursor at end
                 message_placeholder.write(full_response + '▌')
-    #  Write full message with placeholder
+        # Write full message with placeholder
         message_placeholder.write(full_response)
 
     # Add assistant response to chat history
@@ -134,4 +134,4 @@ if prompt := st.chat_input('Your message here...'):
     joblib.dump(
         st.session_state.gemini_history,
         f'data/{st.session_state.chat_id}-gemini_messages',
-    )
+                           )
