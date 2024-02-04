@@ -99,23 +99,23 @@ if prompt := st.chat_input('Your message here...'):
     )
     # Display assistant response in chat message container
     with st.chat_message(
-        name=MODEL_ROLE,
-        avatar=AI_AVATAR_ICON,
+    name=MODEL_ROLE,
+    avatar=AI_AVATAR_ICON,
     ):
-        message_placeholder = st.empty()
-        full_response = ''
-        assistant_response = response
-        # Streams in a chunk at a time
-        for chunk in response:
-            # Simulate stream of chunk
-            # TODO: Chunk missing `text` if API stops mid-stream ("safety"?)
-            for ch in chunk.text.split(' '):
-                full_response += ch + ' '
-                time.sleep(0.05)
-                # Rewrites with a cursor at end
-                message_placeholder.write(full_response + '▌')
-        # Write full message with placeholder
-        message_placeholder.write(full_response)
+    message_placeholder = st.empty()
+    full _response = ''
+    response_parts = response.candidates[0].content.parts
+    # Streams in a chunk at a time
+    for part in response_parts:
+        # Simulate stream of chunk
+        # TODO: Chunk missing `text` if API stops mid-stream ("safety"?)
+        for ch in part.text.split(' '):
+            full_response += ch + ' '
+            time.sleep(0.05)
+            # Rewrites with a cursor at end
+            message_placeholder.write(full_response + '▌')
+    #  Write full message with placeholder
+    message_placeholder.write(full_response)
 
     # Add assistant response to chat history
     st.session_state.messages.append(
