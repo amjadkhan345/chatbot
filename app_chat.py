@@ -115,7 +115,7 @@ if prompt := st.chat_input('Your message here...'):
             # Rewrites with a cursor at end
                 message_placeholder.write(full_response + '▌')
     #  Write full message with placeholder
-         message_placeholder.write(full_response)
+        message_placeholder.write(full_response)
 
     # Add assistant response to chat history
     st.session_state.messages.append(
