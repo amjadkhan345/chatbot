@@ -113,7 +113,7 @@ if prompt := st.chat_input('Your message here...'):
                 full_response += ch + ' '
                 time.sleep(0.05)
             # Rewrites with a cursor at end
-                 message_placeholder.write(full_response + '▌')
+                message_placeholder.write(full_response + '▌')
     #  Write full message with placeholder
          message_placeholder.write(full_response)
 
